@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrimonio Alessandro & Veronica</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Playfair Display', serif;
+  background: white;
+  overflow: hidden;
+}
+
+/* SLIDE */
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 6%;
+  text-align: right;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.slide.exit {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* SFONDO */
+.slide {
+  background-image:
+    linear-gradient(to right,
+      rgba(191,160,111,0.85),
+      rgba(200,120,120,0.15),
+      rgba(255,255,255,1) 70%
+    ),
+    url("https://cdn.shopify.com/s/files/1/0437/4950/7224/files/asanoha_1945180351_Large_1c63bd66-09fb-44fb-9e3e-1850b35ffc9a.jpg?v=1693543270");
+  background-repeat: repeat;
+  background-size: auto, 220px;
+}
+
+/* TESTI */
+h1 { font-size: 48px; color: #bfa06f; }
+h2 { font-size: 64px; color: #c14c4c; }
+p  { font-size: 46px; color: #bfa06f; }
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 30px;
+  right: 6%;
+  font-size: 16px;
+}
+
+/* AUDIO */
+#audioBtn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  font-size: 18px;
+  padding: 10px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="accidentally-in-love.mp3" type="audio/mpeg">
+</audio>
+
+<button id="audioBtn">▶ Musica</button>
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="s1">
+  <div>
+    <h2>Matrimonio</h2>
+    <h1>Alessandro & Veronica</h1>
+    <h2>19 Dicembre 2026</h2>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide" id="s2">
+  <div>
+    <p>Cerimonia<br>Chiesa di S. Martino<br>Malnate (VA)</p>
+    <p>Festeggiamenti<br>Ristorante La Madonnina<br>Cantello</p>
+  </div>
+
+  <div class="footer">
+    📍
+    <a href="https://www.google.com/maps/search/Chiesa+di+San+Martino+Malnate" target="_blank">Chiesa</a> |
+    <a href="https://www.google.com/maps/search/Ristorante+La+Madonnina+Cantello" target="_blank">Location</a><br>
+    📅
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Matrimonio+Alessandro+e+Veronica&dates=20261219/20261220" target="_blank">Google</a> |
+    <a href="https://www.addevent.com/ics/?title=Matrimonio+Alessandro+e+Veronica&start=2026-12-19&end=2026-12-20">iOS</a>
+  </div>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const music  = document.getElementById('bgMusic');
+const btn    = document.getElementById('audioBtn');
+
+let current = 0;
+let musicOn = false;
+
+/* MUSICA: SOLO DA PULSANTE */
+btn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (!musicOn) {
+    music.volume = 0.4;
+    music.play();
+    btn.textContent = '🔇 Muta';
+    musicOn = true;
+  } else {
+    music.pause();
+    btn.textContent = '▶ Musica';
+    musicOn = false;
+  }
+});
+
+/* NAVIGAZIONE: SOLO 2 PAGINE */
+document.body.addEventListener('click', () => {
+  if (current === 0) {
+    slides[0].classList.remove('active');
+    slides[0].classList.add('exit');
+    slides[1].classList.add('active');
+    current = 1;
+  }
+});
+</script>
+
+</body>
+</html>
+
